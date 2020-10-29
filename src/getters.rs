@@ -1,18 +1,25 @@
-use util::*;
-use syn::*;
 use quote;
+use syn::*;
+use util::*;
 
 pub(crate) fn impl_enum_as_getters(ast: &DeriveInput) -> quote::Tokens {
     let ref name = ast.ident;
 
-    let variants =
-        if let Body::Enum(ref e) = ast.body { e }
-        else { unreachable!() };
+    let variants = if let Body::Enum(ref e) = ast.body {
+        e
+    } else {
+        unreachable!()
+    };
 
     macro_rules! getter_filter {
         () => {
-            variants.iter()
-                .filter(|v| if let VariantData::Tuple(_) = v.data { true } else { false })
+            variants.iter().filter(|v| {
+                if let VariantData::Tuple(_) = v.data {
+                    true
+                } else {
+                    false
+                }
+            })
         };
     }
 
@@ -34,10 +41,18 @@ pub(crate) fn impl_enum_as_getters(ast: &DeriveInput) -> quote::Tokens {
     let variant_types = getter_filter!()
         .filter(|v| v.data.fields().len() == 1)
         .map(|v| &v.data.fields()[0].ty)
-        .map(|ty| Ty::Rptr(None, Box::new(MutTy { ty: ty.clone(), mutability: Mutability::Immutable })))
+        .map(|ty| {
+            Ty::Rptr(
+                None,
+                Box::new(MutTy {
+                    ty: ty.clone(),
+                    mutability: Mutability::Immutable,
+                }),
+            )
+        })
         .collect::<Vec<Ty>>();
 
-    let getter_names = vec!(name.clone(); variant_types.len());
+    let getter_names = vec![name.clone(); variant_types.len()];
 
     let mut tokens = quote! {
         #[allow(dead_code)]
@@ -71,10 +86,26 @@ pub(crate) fn impl_enum_as_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let variant_types = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
-        .map(|v| Ty::Tup(v.data.fields().iter().map(|field| Ty::Rptr(None, Box::new(MutTy { ty: field.ty.clone(), mutability: Mutability::Immutable }))).collect::<Vec<Ty>>()))
+        .map(|v| {
+            Ty::Tup(
+                v.data
+                    .fields()
+                    .iter()
+                    .map(|field| {
+                        Ty::Rptr(
+                            None,
+                            Box::new(MutTy {
+                                ty: field.ty.clone(),
+                                mutability: Mutability::Immutable,
+                            }),
+                        )
+                    })
+                    .collect::<Vec<Ty>>(),
+            )
+        })
         .collect::<Vec<Ty>>();
 
-    let getter_names_multiple = vec!(name.clone(); variant_types.len());
+    let getter_names_multiple = vec![name.clone(); variant_types.len()];
 
     let tuple_args = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
@@ -107,14 +138,21 @@ pub(crate) fn impl_enum_as_getters(ast: &DeriveInput) -> quote::Tokens {
 pub(crate) fn impl_enum_into_getters(ast: &DeriveInput) -> quote::Tokens {
     let ref name = ast.ident;
 
-    let variants =
-        if let Body::Enum(ref e) = ast.body { e }
-        else { unreachable!() };
+    let variants = if let Body::Enum(ref e) = ast.body {
+        e
+    } else {
+        unreachable!()
+    };
 
     macro_rules! getter_filter {
         () => {
-            variants.iter()
-                .filter(|v| if let VariantData::Tuple(_) = v.data { true } else { false })
+            variants.iter().filter(|v| {
+                if let VariantData::Tuple(_) = v.data {
+                    true
+                } else {
+                    false
+                }
+            })
         };
     }
 
@@ -138,7 +176,7 @@ pub(crate) fn impl_enum_into_getters(ast: &DeriveInput) -> quote::Tokens {
         .map(|v| v.data.fields()[0].ty.clone())
         .collect::<Vec<Ty>>();
 
-    let getter_names = vec!(name.clone(); variant_types.len());
+    let getter_names = vec![name.clone(); variant_types.len()];
 
     let mut tokens = quote! {
         #[allow(dead_code)]
@@ -172,10 +210,18 @@ pub(crate) fn impl_enum_into_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let variant_types = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
-        .map(|v| Ty::Tup(v.data.fields().iter().map(|field| field.ty.clone()).collect::<Vec<Ty>>()))
+        .map(|v| {
+            Ty::Tup(
+                v.data
+                    .fields()
+                    .iter()
+                    .map(|field| field.ty.clone())
+                    .collect::<Vec<Ty>>(),
+            )
+        })
         .collect::<Vec<Ty>>();
 
-    let getter_names = vec!(name.clone(); variant_types.len());
+    let getter_names = vec![name.clone(); variant_types.len()];
 
     let tuple_args = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
@@ -208,14 +254,21 @@ pub(crate) fn impl_enum_into_getters(ast: &DeriveInput) -> quote::Tokens {
 pub(crate) fn impl_enum_to_getters(ast: &DeriveInput) -> quote::Tokens {
     let ref name = ast.ident;
 
-    let variants =
-        if let Body::Enum(ref e) = ast.body { e }
-        else { unreachable!() };
+    let variants = if let Body::Enum(ref e) = ast.body {
+        e
+    } else {
+        unreachable!()
+    };
 
     macro_rules! getter_filter {
         () => {
-            variants.iter()
-                .filter(|v| if let VariantData::Tuple(_) = v.data { true } else { false })
+            variants.iter().filter(|v| {
+                if let VariantData::Tuple(_) = v.data {
+                    true
+                } else {
+                    false
+                }
+            })
         };
     }
 
@@ -239,7 +292,7 @@ pub(crate) fn impl_enum_to_getters(ast: &DeriveInput) -> quote::Tokens {
         .map(|v| v.data.fields()[0].ty.clone())
         .collect::<Vec<Ty>>();
 
-    let getter_names = vec!(name.clone(); variant_types.len());
+    let getter_names = vec![name.clone(); variant_types.len()];
 
     let mut tokens = quote! {
         #[allow(dead_code)]
@@ -273,10 +326,18 @@ pub(crate) fn impl_enum_to_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let variant_types = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
-        .map(|v| Ty::Tup(v.data.fields().iter().map(|field| field.ty.clone()).collect::<Vec<Ty>>()))
+        .map(|v| {
+            Ty::Tup(
+                v.data
+                    .fields()
+                    .iter()
+                    .map(|field| field.ty.clone())
+                    .collect::<Vec<Ty>>(),
+            )
+        })
         .collect::<Vec<Ty>>();
 
-    let getter_names = vec!(name.clone(); variant_types.len());
+    let getter_names = vec![name.clone(); variant_types.len()];
 
     let tuple_args = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)

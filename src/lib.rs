@@ -173,4 +173,3 @@ pub fn enum_is_a(input: TokenStream) -> TokenStream {
     gen.append(&mut impl_unit_enum_is_a(&ast));
     gen.parse().unwrap()
 }
-

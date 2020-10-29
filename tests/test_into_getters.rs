@@ -14,11 +14,22 @@ fn test_into_getters() {
     let foo = MyEnum::Foo(42);
     let bar = MyEnum::Bar(false);
     let baz = MyEnum::Baz("hurry boy, it's waiting there for you".to_string());
-    let tup = MyEnum::Tup(42, String::from("Hello, Tuple, my old friend!"), vec![true, false, true]);
+    let tup = MyEnum::Tup(
+        42,
+        String::from("Hello, Tuple, my old friend!"),
+        vec![true, false, true],
+    );
     assert_eq!(foo.into_foo(), 42);
     assert_eq!(bar.into_bar(), false);
     assert_eq!(baz.into_baz(), "hurry boy, it's waiting there for you");
-    assert_eq!(tup.into_tup(), (42, String::from("Hello, Tuple, my old friend!"), vec![true, false, true]));
+    assert_eq!(
+        tup.into_tup(),
+        (
+            42,
+            String::from("Hello, Tuple, my old friend!"),
+            vec![true, false, true]
+        )
+    );
 }
 
 #[test]
@@ -30,9 +41,8 @@ fn test_into_getter_names() {
     }
 
     let first = MyEnum::FooBar(true);
-    let second = MyEnum::BarBaz(
-        "there's nothing that a hundred men or more could ever do".to_string(),
-    );
+    let second =
+        MyEnum::BarBaz("there's nothing that a hundred men or more could ever do".to_string());
     assert_eq!(first.into_foo_bar(), true);
     assert_eq!(
         second.into_bar_baz(),
@@ -60,9 +70,8 @@ fn test_getter_structs() {
     }
 
     let first = MyEnum::FooBar(true);
-    let second = MyEnum::BarBaz(
-        "there's nothing that a hundred men or more could ever do".to_string(),
-    );
+    let second =
+        MyEnum::BarBaz("there's nothing that a hundred men or more could ever do".to_string());
     let third = MyEnum::SomeStruct { foo: 42 };
     assert_eq!(first.into_foo_bar(), true);
     assert_eq!(
