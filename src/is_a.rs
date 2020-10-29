@@ -40,7 +40,7 @@ pub(crate) fn impl_enum_is_a(ast: &DeriveInput) -> quote::Tokens {
     quote! {
         #[allow(dead_code)]
         impl #name {
-            #(pub fn #function_names(&self) -> bool {
+            #(#[inline(always)] pub fn #function_names(&self) -> bool {
                 if let &#getter_names::#variant_names(#(#variant_counts),*) = self {
                     true
                 }
@@ -86,7 +86,7 @@ pub(crate) fn impl_unit_enum_is_a(ast: &DeriveInput) -> quote::Tokens {
     quote! {
         #[allow(dead_code)]
         impl #name {
-            #(pub fn #function_names(&self) -> bool {
+            #(#[inline(always)] pub fn #function_names(&self) -> bool {
                 if let &#getter_names::#variant_names = self {
                     true
                 }
@@ -146,7 +146,7 @@ pub(crate) fn impl_struct_enum_is_a(ast: &DeriveInput) -> quote::Tokens {
     quote! {
         #[allow(dead_code)]
         impl #name {
-            #(pub fn #function_names(&self) -> bool {
+            #(#[inline(always)] pub fn #function_names(&self) -> bool {
                 if let &#getter_names::#variant_names { #(#variant_field_names: #variant_counts),* } = self {
                     true
                 }

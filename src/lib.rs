@@ -46,7 +46,7 @@ impl MyEnum {
             i
         }
         else {
-            panic!("called MyEnum::FooBarBaz() on {:?}", self)
+            unreachable!("called MyEnum::FooBarBaz() on {:?}", self)
         }
     }
     // et cetera
@@ -57,7 +57,7 @@ impl MyEnum {
 But this gets tedious, and adds a lot code for this simple functionality.
 Enter `enum-methods`.
 
-Instead of doing the above with the `if let ... else { panic!(...) }`, you
+Instead of doing the above with the `if let ... else { unreachable!(...) }`, you
 simply derive from the `EnumIntoGetters`
 
 ```rust
@@ -75,11 +75,11 @@ fn main() {
     let my_foo = MyEnum::FooBarBaz(42);
     // EnumIsA - creates is_* methods for every member
     if my_foo.is_FooBarBaz() {
-        // EnumAsGetters - gets a reference to the enum, panicking if it is
+        // EnumAsGetters - gets a reference to the enum, unreachableking if it is
         // not the specified variant
         assert_eq!(*my_foo.as_FooBarBaz(), 42);
         // EnumIntoGetters - consumes the enum, yielding its owned value,
-        // and panicking if it is not the specified variant
+        // and unreachableking if it is not the specified variant
         assert_eq!(my_foo.into_FooBarBaz(), 42);
     }
 }
@@ -102,7 +102,7 @@ Right now, `enum-methods` has four derivable options:
 * Any enum variant which has exactly 1 member will have a getter generated for
   it. All other variants are ignored.
 * Enums which derive from `EnumIntoGetters` must also derive from `Debug` - this
-  is for when a method is called for the wrong variant and needs to `panic!`.
+  is for when a method is called for the wrong variant and needs to `unreachable!`.
 
 Furthermore, `EnumToGetters` is *only* for enums whose variants implement
 `Clone`. There is not yet support for th
@@ -143,7 +143,7 @@ pub fn enum_as_getters(input: TokenStream) -> TokenStream {
     let s = input.to_string();
     let ast = parse_derive_input(&s).unwrap();
     let getters = impl_enum_as_getters(&ast);
-    //panic!("{:#?}", getters);
+    //unreachable!("{:#?}", getters);
     getters.parse().unwrap()
 }
 
