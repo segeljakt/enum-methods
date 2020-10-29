@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 #[macro_use]
 extern crate enum_methods;
 
@@ -19,14 +20,14 @@ fn test_to_getters() {
         String::from("Hello, Tuple, my old friend!"),
         vec![true, false, true],
     );
-    assert_eq!(foo.to_foo(), 42);
-    assert_eq!(bar.to_bar(), false);
-    assert_eq!(baz.to_baz(), "hurry boy, it's waiting there for you");
-    assert_eq!(foo.into_foo(), 42);
-    assert_eq!(bar.into_bar(), false);
-    assert_eq!(baz.into_baz(), "hurry boy, it's waiting there for you");
+    assert_eq!(foo.to_Foo(), 42);
+    assert_eq!(bar.to_Bar(), false);
+    assert_eq!(baz.to_Baz(), "hurry boy, it's waiting there for you");
+    assert_eq!(foo.into_Foo(), 42);
+    assert_eq!(bar.into_Bar(), false);
+    assert_eq!(baz.into_Baz(), "hurry boy, it's waiting there for you");
     assert_eq!(
-        tup.into_tup(),
+        tup.into_Tup(),
         (
             42,
             String::from("Hello, Tuple, my old friend!"),
@@ -46,14 +47,14 @@ fn test_to_getter_names() {
     let first = MyEnum::FooBar(true);
     let second =
         MyEnum::BarBaz("there's nothing that a hundred men or more could ever do".to_string());
-    assert_eq!(first.to_foo_bar(), true);
+    assert_eq!(first.to_FooBar(), true);
     assert_eq!(
-        second.to_bar_baz(),
+        second.to_BarBaz(),
         "there's nothing that a hundred men or more could ever do"
     );
-    assert_eq!(first.into_foo_bar(), true);
+    assert_eq!(first.into_FooBar(), true);
     assert_eq!(
-        second.into_bar_baz(),
+        second.into_BarBaz(),
         "there's nothing that a hundred men or more could ever do"
     );
 }
@@ -88,15 +89,15 @@ fn test_getter_structs() {
     let second =
         MyEnum::BarBaz("there's nothing that a hundred men or more could ever do".to_string());
     let third = MyEnum::SomeStruct { foo: 42 };
-    assert_eq!(first.to_foo_bar(), true);
+    assert_eq!(first.to_FooBar(), true);
     assert_eq!(
-        second.to_bar_baz(),
+        second.to_BarBaz(),
         "there's nothing that a hundred men or more could ever do"
     );
     assert_eq!(third.to_some_struct(), 42);
-    assert_eq!(first.into_foo_bar(), true);
+    assert_eq!(first.into_FooBar(), true);
     assert_eq!(
-        second.into_bar_baz(),
+        second.into_BarBaz(),
         "there's nothing that a hundred men or more could ever do"
     );
     assert_eq!(third.into_some_struct(), 42);

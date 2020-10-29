@@ -30,7 +30,7 @@ pub(crate) fn impl_enum_as_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let function_names = getter_filter!()
         .filter(|v| v.data.fields().len() == 1)
-        .map(|v| format!("as_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("as_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let function_name_strs = getter_filter!()
@@ -76,7 +76,7 @@ pub(crate) fn impl_enum_as_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let function_names = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
-        .map(|v| format!("as_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("as_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let function_name_strs = getter_filter!()
@@ -163,7 +163,7 @@ pub(crate) fn impl_enum_into_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let function_names = getter_filter!()
         .filter(|v| v.data.fields().len() == 1)
-        .map(|v| format!("into_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("into_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let function_name_strs = getter_filter!()
@@ -200,7 +200,7 @@ pub(crate) fn impl_enum_into_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let function_names = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
-        .map(|v| format!("into_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("into_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let function_name_strs = getter_filter!()
@@ -279,7 +279,7 @@ pub(crate) fn impl_enum_to_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let function_names = getter_filter!()
         .filter(|v| v.data.fields().len() == 1)
-        .map(|v| format!("to_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("to_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let function_name_strs = getter_filter!()
@@ -316,7 +316,7 @@ pub(crate) fn impl_enum_to_getters(ast: &DeriveInput) -> quote::Tokens {
 
     let function_names = getter_filter!()
         .filter(|v| v.data.fields().len() > 1)
-        .map(|v| format!("to_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("to_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let function_name_strs = getter_filter!()

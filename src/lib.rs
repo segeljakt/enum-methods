@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+
 /*!
 # enum-methods
 
@@ -72,13 +74,13 @@ enum MyEnum {
 fn main() {
     let my_foo = MyEnum::FooBarBaz(42);
     // EnumIsA - creates is_* methods for every member
-    if my_foo.is_foo_bar_baz() {
+    if my_foo.is_FooBarBaz() {
         // EnumAsGetters - gets a reference to the enum, panicking if it is
         // not the specified variant
-        assert_eq!(*my_foo.as_foo_bar_baz(), 42);
+        assert_eq!(*my_foo.as_FooBarBaz(), 42);
         // EnumIntoGetters - consumes the enum, yielding its owned value,
         // and panicking if it is not the specified variant
-        assert_eq!(my_foo.into_foo_bar_baz(), 42);
+        assert_eq!(my_foo.into_FooBarBaz(), 42);
     }
 }
 ```

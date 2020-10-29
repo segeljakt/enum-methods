@@ -1,6 +1,5 @@
 use quote;
 use syn::*;
-use util::*;
 
 /// Gives implementations of is_a_* functions for tuples.
 pub(crate) fn impl_enum_is_a(ast: &DeriveInput) -> quote::Tokens {
@@ -29,7 +28,7 @@ pub(crate) fn impl_enum_is_a(ast: &DeriveInput) -> quote::Tokens {
         .collect::<Vec<Ident>>();
 
     let function_names = is_a_filter!()
-        .map(|v| format!("is_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("is_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let variant_counts = is_a_filter!()
@@ -79,7 +78,7 @@ pub(crate) fn impl_unit_enum_is_a(ast: &DeriveInput) -> quote::Tokens {
         .collect::<Vec<Ident>>();
 
     let function_names = is_a_filter!()
-        .map(|v| format!("is_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("is_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let getter_names = vec![name.clone(); variant_names.len()];
@@ -125,7 +124,7 @@ pub(crate) fn impl_struct_enum_is_a(ast: &DeriveInput) -> quote::Tokens {
         .collect::<Vec<Ident>>();
 
     let function_names = is_a_filter!()
-        .map(|v| format!("is_{}", to_snake_case(&v.ident)).into())
+        .map(|v| format!("is_{}", &v.ident).into())
         .collect::<Vec<Ident>>();
 
     let variant_field_names = is_a_filter!()

@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 #[macro_use]
 extern crate enum_methods;
 
@@ -28,11 +29,11 @@ fn test_is_a() {
         baz: true,
     };
 
-    assert!(first.is_foo());
-    assert!(second.is_bar());
-    assert!(third.is_baz());
-    assert!(fourth.is_struct_type());
-    assert!(fifth.is_bigger_struct_type());
+    assert!(first.is_Foo());
+    assert!(second.is_Bar());
+    assert!(third.is_Baz());
+    assert!(fourth.is_StructType());
+    assert!(fifth.is_BiggerStructType());
 }
 
 #[test]
@@ -48,7 +49,7 @@ fn test_is_a_names() {
     let second = MyEnum::BarBaz(false, -3);
     let third = MyEnum::Baz("cheers only whispers of some quiet conversation".to_string());
 
-    assert!(first.is_foo_bar());
-    assert!(second.is_bar_baz());
-    assert!(third.is_baz());
+    assert!(first.is_FooBar());
+    assert!(second.is_BarBaz());
+    assert!(third.is_Baz());
 }
